@@ -70,3 +70,27 @@ CREATE TABLE RESERVA_ASSENTO (
     Telefone_cliente VARCHAR(20),
     PRIMARY KEY (Numero_voo, Numero_trecho, Data, Numero_assento)
 );
+
+-- /*Exercicio 3: Com base no banco de dados criado no exercício 2, crie uma nova tabela “Passageiro”, e faça: Campos: a. código do passageiro, nome do passageiro, telefone, endereço, email e CPF. b. Remova os campos Nome_cliente e Telefone_cliente da tabela “Reserva_Assento”. c. Também, faça o relacionamento entre as tabelas “Reserva_Assento” e “Passageiro”.*/
+
+CREATE TABLE Passageiro (
+    codigo_passageiro INT PRIMARY KEY,
+    nome_passageiro VARCHAR(100) NOT NULL,
+    telefone VARCHAR(20),
+    endereco VARCHAR(255),
+    email VARCHAR(100),
+    cpf VARCHAR(14) UNIQUE NOT NULL
+);
+
+ALTER TABLE Reserva_Assento
+DROP COLUMN Nome_cliente;
+
+ALTER TABLE Reserva_Assento
+DROP COLUMN Telefone_cliente;
+
+ALTER TABLE Reserva_Assento
+ADD COLUMN codigo_passageiro INT;
+
+ALTER TABLE Reserva_Assento
+ADD CONSTRAINT fk_passageiro
+FOREIGN KEY (codigo_passageiro) REFERENCES Passageiro(codigo_passageiro);
